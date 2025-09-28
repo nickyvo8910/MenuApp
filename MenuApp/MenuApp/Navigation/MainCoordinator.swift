@@ -22,9 +22,7 @@ class MainCoordinator: BaseCoordinator<UINavigationController> {
     weak var delegate: MainCoordinatorDelegate?
     
     override func start() {
-        presenter.setNavigationBarHidden(true, animated: false)
-        let tabBarController = configureTabBarCongroller()
-        presenter.setViewControllers([tabBarController], animated: true)
+      showLoadingPage()
     }
     
 }
@@ -82,4 +80,28 @@ private extension MainCoordinator {
         return coordinator
     }
     
+}
+
+private extension MainCoordinator{
+  func showLoadingPage() {
+    let viewModel = LoadingView.LoadingViewModel()
+    viewModel.navDelegate = self
+    let view = LoadingView(viewModel: viewModel)
+    let controller = HostingController(rootView: view, viewModel: viewModel)
+
+    presenter.setViewControllers([controller], animated: true)
+    presenter.navigationBar.isHidden = true
+  }
+  
+  func showMain(){
+    presenter.setNavigationBarHidden(true, animated: false)
+    let tabBarController = configureTabBarCongroller()
+    presenter.setViewControllers([tabBarController], animated: true)
+  }
+}
+
+extension MainCoordinator: LoadingNavDelegate {
+  func onLoadingCompleted() {
+    showMain()
+  }
 }
