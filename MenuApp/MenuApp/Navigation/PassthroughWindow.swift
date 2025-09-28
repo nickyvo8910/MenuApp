@@ -4,6 +4,7 @@
 //
 //  Created by Nicky Vo on 28/09/2025.
 //
+
 import UIKit
 
 class PassthroughWindow: UIWindow {
@@ -14,9 +15,4 @@ class PassthroughWindow: UIWindow {
       return nil  // Let touches fall through to windows underneath
     }
   }
-}
-
-class PopupTracker {
-  static let shared = PopupTracker()
-  var popups: Int = 0
 }
