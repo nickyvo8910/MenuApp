@@ -13,4 +13,5 @@ extension Logger {
   static let ui = Logger(subsystem: subsystem, category: "ui")
   static let navigation = Logger(subsystem: subsystem, category: "navigation")
   static let popup = Logger(subsystem: subsystem, category: "popup")
+  static let database = Logger(subsystem: subsystem, category: "database")
 }
