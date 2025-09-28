@@ -14,7 +14,7 @@ extension Container {
     self { ApiClient(baseUrl: AppConfigs.menuEndpoint) }.singleton
   }
   
-  var syncService: Factory<SyncServiceProtocol>{
+  var syncService: Factory<SyncService>{
     self { SyncServiceImpl() }.singleton
   }
   

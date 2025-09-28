@@ -39,7 +39,7 @@ enum LoadingError: LocalizedError {
 
 extension LoadingView {
   class LoadingViewModel: BaseViewModel, ObservableObject {
-    @Injected(\.syncService) var syncService: SyncServiceProtocol
+    @Injected(\.syncService) var syncService: SyncService
     @Injected(\.itemRepo) var itemRepo: MenuItemsRepository
     
     weak var navDelegate: LoadingNavDelegate?

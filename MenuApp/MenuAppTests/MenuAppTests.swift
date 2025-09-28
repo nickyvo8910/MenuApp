@@ -6,31 +6,44 @@
 //
 
 import XCTest
+import Alamofire
+import Factory
 
 @testable import MenuApp
 
 final class MenuAppTests: XCTestCase {
+  var syncService: SyncService! = nil
 
   override func setUpWithError() throws {
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    Container.shared.apiClient.register { ApiClient(
+      baseUrl: AppConfigs.menuEndpoint
+    ) }
+    
+    self.syncService = SyncServiceImpl()
   }
 
   override func tearDownWithError() throws {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
 
-  func testExample() throws {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    // Any test you write for XCTest can be annotated as throws and async.
-    // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-    // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+  func testItemsDownload() async throws {
+    do {
+      let items = try await self.syncService.downloadMenuItems()
+      XCTAssert(!items.isEmpty)
+    }  catch {
+      XCTFail("Failed to download items")
+    }
   }
-
-  func testPerformanceExample() throws {
-    // This is an example of a performance test case.
-    self.measure {
-      // Put the code you want to measure the time of here.
+  
+  func testLoadItemDetails() async throws {
+    do {
+      let item = try await self.syncService.loadItemDetails(id: 1)
+      // image & descriptions only available on this endpoint
+      XCTAssert(item.image?.isEmpty == false)
+      XCTAssert(item.description?.isEmpty == false)
+    }  catch {
+      XCTFail("Failed to load item details")
     }
   }
 

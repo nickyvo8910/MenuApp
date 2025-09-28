@@ -10,6 +10,8 @@ struct MenuItemDto: Decodable {
   let category: String
   let name: String
   let price: Double
+  let description: String?
+  let image: String?
 }
 
 extension MenuItemDto{
