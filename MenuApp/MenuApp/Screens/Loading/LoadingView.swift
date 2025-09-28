@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoadingView: View { 
+struct LoadingView: View {
   @StateObject var viewModel: LoadingViewModel
   var body: some View {
     ZStack {
@@ -19,11 +19,27 @@ struct LoadingView: View {
         VStack(alignment: .center, spacing: CommonUIConstants.mediumPadding) {
           Spacer()
 
-          LoadingCircle(strokeWidth: 10, height: 100)
+          if viewModel.loadingError != nil{
+            Text("Please try again")
+              .foregroundStyle(Color.colorDarkPink)
+              .padding(.bottom, CommonUIConstants.mediumPadding)
+            
+            Button(action:{
+              Task{
+                await viewModel.syncData()
+              }
+            }, label: {
+              Text("Retry")
+                .foregroundStyle(Color.colorDarkBlue)
+                .padding(.bottom, CommonUIConstants.mediumPadding)
+            })
+          }else {
+            LoadingCircle(strokeWidth: 10, height: 100)
 
-          Text("Loading")
-            .foregroundStyle(Color.colorOffWhite)
-            .padding(.bottom, CommonUIConstants.mediumPadding)
+            Text("Loading")
+              .foregroundStyle(Color.colorOffWhite)
+              .padding(.bottom, CommonUIConstants.mediumPadding)
+          }
 
           Spacer()
         }

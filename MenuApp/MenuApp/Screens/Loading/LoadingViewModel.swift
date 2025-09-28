@@ -8,6 +8,7 @@
 import OSLog
 import SwiftUI
 import Combine
+import Factory
 
 protocol LoadingNavDelegate: AnyObject {
   func onLoadingCompleted()
@@ -36,8 +37,11 @@ enum LoadingError: LocalizedError {
   }
 }
 
-extension LoadingView { 
+extension LoadingView {
   class LoadingViewModel: BaseViewModel, ObservableObject {
+    @Injected(\.syncService) var syncService: SyncServiceProtocol
+    @Injected(\.itemRepo) var itemRepo: MenuItemsRepository
+    
     weak var navDelegate: LoadingNavDelegate?
     private var cancellables: [AnyCancellable] = []
     
@@ -66,14 +70,68 @@ extension LoadingView {
     }
     
     func onViewInit() async {
+      await syncData()
       
-      try? await Task.sleep(nanoseconds: 500000000)
-      // Loading complete
-      await MainActor.run {
-        self.isBusy = false
+      if loadingError != nil{
+        await ConfirmationPopup(title: "Data Sync Failed", message: " \(loadingError?.errorDescription ?? "") - Please try again", confirm: "OK", onConfirm: {
+          
+        }).present()
+        
+      }else{
+        // Loading complete
+        await MainActor.run {
+          self.isBusy = false
+        }
       }
-      
     }
     
+    func syncData () async{
+      await MainActor.run {
+        self.loadingError = nil
+      }
+#if DEBUG
+      try? await Task.sleep(nanoseconds: 500_000_000) // Delay for debug demo
+#endif
+      
+      do {
+        let response = try await syncService.downloadMenuItems()
+        
+        if response.isEmpty{
+          await MainActor.run {
+            loadingError = .other
+          }
+        }
+        else {
+          // Mapping reponse items to DomainModels then init the database replacement process.
+          // This allows data refresh on app start
+          try await itemRepo.replaceFromList(items: response.map({$0.toDomainModel()}))
+          Logger.database.info("\(#function) - Replaced items with new data from endpoint.")
+        }
+        
+      } catch let error as ApiError {
+        switch error {
+        case .noConnection:
+          await MainActor.run {
+            loadingError = .noInternet
+          }
+          Logger.network.error("\(#function) - noInternet.")
+        case .unauthorized:
+          await MainActor.run {
+            loadingError = .unauthorised
+          }
+          Logger.network.error("\(#function) - unauthorised.")
+        default:
+          await MainActor.run {
+            loadingError = .other
+          }
+          Logger.network.error("\(#function) - other api error: \(error)")
+        }
+      } catch {
+        await MainActor.run {
+          loadingError = .other
+        }
+        Logger.network.error("\(#function) - other network error.")
+      }
+    }
   }
 }
