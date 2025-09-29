@@ -27,7 +27,8 @@ The code adheres to SOLID principles aiming for maintainability and clarity.
 - Menu item list filtered by selected category  
 - Detailed item view with async image loading  
 - Robust error handling and user-friendly loading states  
-- Unit tests cover key data and view model functions  
+- Unit tests cover key data and view model functions
+- Invalid JSON reponse UI handlings (Mushroom & Spinach Pie, Beer-Battered Onion Rings, Chocolate Brownie Sundae)
 
 ## Setup Instructions
 
@@ -54,7 +55,6 @@ In Xcode, press `Cmd+U` or go to Product > Test to run the unit tests.
 - More comprehensive error UI states.  
 - Offline mode with persistent cache.
 - UI refinements and animations.
-- Invalid JSON reponse UI handlings (Mushroom & Spinach Pie, Beer-Battered Onion Rings, Chocolate Brownie Sundae)
 
 ## Contact
 
