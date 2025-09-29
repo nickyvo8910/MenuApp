@@ -20,7 +20,9 @@ final class ApiClient {
     case .success(let value):
       return value
     case .failure(let error):
-      Logger.network.error("\(#function) - Api request failure - \(response.response)")
+      Logger.network.error(
+        "\(#function) - API request failure - \(String(describing: response.response))"
+      )
       throw mapAPIError(error, response: response.response)
     }
   }
@@ -39,16 +41,20 @@ final class ApiClient {
     }
     if let statusCode = response?.statusCode {
       switch statusCode {
-      case 400: return .badRequest(error.localizedDescription)
-      case 401: return .unauthorized
-      case 404: return .notFound
-      default: return .invalidStatusCode(statusCode)
+      case 400:
+        return .badRequest(error.localizedDescription)
+      case 401:
+        return .unauthorized
+      case 404:
+        return .notFound
+      default:
+        return .invalidStatusCode(statusCode)
       }
     } else if error.isResponseSerializationError {
       return .jsonDecoding
     } else {
       Logger.network.error("\(#function) - error - \(error.localizedDescription)")
-      return .responseError(response.debugDescription)
+      return .responseError(error.localizedDescription)
     }
   }
 }

@@ -13,17 +13,17 @@ class HomeCoordinator: BaseCoordinator<UINavigationController> {
 
   override func start() {
     presenter.setNavigationBarHidden(true, animated: false)
-    showHomeScreen()
+    showCourseSelection()
   }
 }
 
 // MARK: - Showing Screens
 extension HomeCoordinator {
-  func showHomeScreen() {
-    let viewModel = CategoryView.CategoryViewModel()
+  func showCourseSelection() {
+    let viewModel = CourseView.CourseViewModel()
     viewModel.navDelegate = self
 
-    let view = CategoryView(viewModel: viewModel)
+    let view = CourseView(viewModel: viewModel)
     let controller = HostingController(rootView: view, viewModel: viewModel)
     presenter.setViewControllers([controller], animated: true)
   }
@@ -51,8 +51,8 @@ extension HomeCoordinator {
   }
 }
 
-extension HomeCoordinator: CategoryViewNavDelegate {
-  func onCategoryTapped(courseModel: MenuCourseModel) {
+extension HomeCoordinator: CourseViewNavDelegate {
+  func onCourseTapped(courseModel: MenuCourseModel) {
     showMenuCourse(courseModel: courseModel)
   }
 }
@@ -70,9 +70,5 @@ extension HomeCoordinator: MenuCourseViewNavDelegate {
 extension HomeCoordinator: DishDetailsNavDelegate {
   func onDishDetailsBack() {
     presenter.popViewController(animated: true)
-  }
-
-  func onBack() {
-    presenter.popToRootViewController(animated: true)
   }
 }

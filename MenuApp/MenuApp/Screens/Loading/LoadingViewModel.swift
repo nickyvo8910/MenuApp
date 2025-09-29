@@ -39,7 +39,7 @@ enum LoadingError: LocalizedError {
 
 extension LoadingView {
   class LoadingViewModel: BaseViewModel, ObservableObject {
-    @Injected(\.syncService) var syncService: SyncService
+    @Injected(\.itemService) var itemService: MenuItemService
     @Injected(\.itemRepo) var itemRepo: MenuItemsRepository
 
     weak var navDelegate: LoadingNavDelegate?
@@ -68,6 +68,7 @@ extension LoadingView {
       }
     }
 
+    /// Try sync data with popup on error
     func trySyncData() async {
       await syncData()
 
@@ -98,7 +99,7 @@ extension LoadingView {
       #endif
 
       do {
-        let response = try await syncService.downloadMenuItems()
+        let response = try await itemService.downloadMenuItems()
 
         if response.isEmpty {
           await MainActor.run {

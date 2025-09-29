@@ -5,6 +5,7 @@
 //  Created by Nicky Vo on 28/09/2025.
 //
 
+/// Flexible DTO to match different endpoints
 struct MenuItemDto: Decodable {
   let id: Int
   let category: String
@@ -12,6 +13,7 @@ struct MenuItemDto: Decodable {
   let price: Double
   let description: String?
   let image: String?
+
   enum CodingKeys: CodingKey {
     case id
     case category

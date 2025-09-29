@@ -12,7 +12,7 @@ import XCTest
 @testable import MenuApp
 
 final class MenuAppTests: XCTestCase {
-  var syncService: SyncService! = nil
+  var itemService: MenuItemService! = nil
 
   override func setUpWithError() throws {
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,7 +22,7 @@ final class MenuAppTests: XCTestCase {
       )
     }
 
-    self.syncService = SyncServiceImpl()
+    self.itemService = MenuItemServiceImpl()
   }
 
   override func tearDownWithError() throws {
@@ -31,7 +31,7 @@ final class MenuAppTests: XCTestCase {
 
   func testItemsDownload() async throws {
     do {
-      let items = try await self.syncService.downloadMenuItems()
+      let items = try await self.itemService.downloadMenuItems()
       XCTAssert(!items.isEmpty)
     } catch {
       XCTFail("Failed to download items")
@@ -40,7 +40,7 @@ final class MenuAppTests: XCTestCase {
 
   func testLoadItemDetails() async throws {
     do {
-      let item = try await self.syncService.loadItemDetails(id: 1)
+      let item = try await self.itemService.loadItemDetails(id: 1)
       // image & descriptions only available on this endpoint
       XCTAssert(item.image?.isEmpty == false)
       XCTAssert(item.description?.isEmpty == false)

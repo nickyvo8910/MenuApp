@@ -8,6 +8,7 @@
 import OSLog
 import SwiftUI
 
+/// Tracking popup number to work in tandem with PassthroughWindow
 class PopupTracker {
   static let shared = PopupTracker()
   var popups: Int = 0

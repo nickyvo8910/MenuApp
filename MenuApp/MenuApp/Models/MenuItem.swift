@@ -7,6 +7,7 @@
 
 import CoreData
 
+/// Model for internal app use
 struct MenuItem: Hashable {
   let id: Int
   let category: String
@@ -17,6 +18,8 @@ struct MenuItem: Hashable {
 }
 
 extension MenuItem {
+
+  // Converting to Managed Object for database saving.
   func toManagedObject(in context: NSManagedObjectContext) -> MenuItemMO {
     let obj = MenuItemMO(context: context)
     obj.id = Int64(self.id)

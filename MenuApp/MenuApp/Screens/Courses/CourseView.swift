@@ -1,5 +1,5 @@
 //
-//  CategoryView.swift
+//  CourseView.swift
 //  MenuApp
 //
 //  Created by Nicky Vo on 28/09/2025.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct CategoryView: View {
-  @StateObject var viewModel: CategoryViewModel
+struct CourseView: View {
+  @StateObject var viewModel: CourseViewModel
 
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
@@ -22,8 +22,8 @@ struct CategoryView: View {
 
   private var categoryCarousel: some View {
     let view = VStack(spacing: 0) {
-      TabView(selection: $viewModel.selectedCategory) {
-        ForEach(viewModel.categories, id: \.self) { categoryString in
+      TabView(selection: $viewModel.selectedCourse) {
+        ForEach(viewModel.courses, id: \.self) { categoryString in
           VStack {
             Text("\(categoryString)")
               .textCase(.uppercase)
@@ -34,7 +34,7 @@ struct CategoryView: View {
           .padding(CommonUIConstants.mediumPadding)
           .onTapGesture {
             Task {
-              await viewModel.onCategoryTapped()
+              await viewModel.onCourseTapped()
             }
           }
         }
@@ -47,6 +47,6 @@ struct CategoryView: View {
 
 #Preview {
   let items = PreviewValues.items
-  var vm = CategoryView.CategoryViewModel()
-  CategoryView(viewModel: vm)
+  var vm = CourseView.CourseViewModel()
+  CourseView(viewModel: vm)
 }

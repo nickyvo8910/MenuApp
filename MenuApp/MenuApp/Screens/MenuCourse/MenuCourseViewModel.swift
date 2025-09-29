@@ -15,7 +15,7 @@ protocol MenuCourseViewNavDelegate: AnyObject {
 
 extension MenuCourseView {
   class MenuCourseViewModel: BaseViewModel, ObservableObject {
-    @Injected(\.syncService) var syncService: SyncService
+    @Injected(\.itemService) var itemService: MenuItemService
     weak var navDelegate: MenuCourseViewNavDelegate?
 
     let courseModel: MenuCourseModel
@@ -37,7 +37,7 @@ extension MenuCourseView.MenuCourseViewModel {
       self.isBusy = true
     }
     do {
-      let fetchedItem = try await syncService.loadItemDetails(id: selectedItem.id).toDomainModel()
+      let fetchedItem = try await itemService.loadItemDetails(id: selectedItem.id).toDomainModel()
 
       await MainActor.run {
         navDelegate?.onMenuItemTapped(item: fetchedItem)

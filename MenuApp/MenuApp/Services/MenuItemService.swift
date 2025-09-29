@@ -1,5 +1,5 @@
 //
-//  SyncService.swift
+//  MenuItemService.swift
 //  MenuApp
 //
 //  Created by Nicky Vo on 28/09/2025.
@@ -8,12 +8,12 @@
 import Alamofire
 import Factory
 
-protocol SyncService {
+protocol MenuItemService {
   func downloadMenuItems() async throws -> [MenuItemDto]
   func loadItemDetails(id: Int) async throws -> MenuItemDto
 }
 
-final class SyncServiceImpl: SyncService {
+final class MenuItemServiceImpl: MenuItemService {
   @Injected(\.apiClient) private var apiClient: ApiClient
 
   func downloadMenuItems() async throws -> [MenuItemDto] {
