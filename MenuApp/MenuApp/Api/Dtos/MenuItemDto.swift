@@ -20,7 +20,7 @@ struct MenuItemDto: Decodable {
     case description
     case image
   }
-  
+
   init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.id = try container.decode(Int.self, forKey: .id)

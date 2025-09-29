@@ -12,16 +12,19 @@ struct DishDetailsView: View {
 
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
-      HStack{
-        Button(action: {
-          viewModel.navDelegate?.onDishDetailsBack()
-        }, label: {
-          Text("<- Back to dishes")
-        })
+      HStack {
+        Button(
+          action: {
+            viewModel.navDelegate?.onDishDetailsBack()
+          },
+          label: {
+            Text("<- Back to dishes")
+          }
+        )
         Spacer()
       }.padding(CommonUIConstants.smallPadding)
       Spacer()
-      
+
       Text("\(viewModel.item.name)")
         .textCase(.uppercase)
         .font(.title)
@@ -33,21 +36,28 @@ struct DishDetailsView: View {
         .font(.title)
         .bold()
       if let imageString = viewModel.item.image,
-         let url = URL(string: imageString){
+        let url = URL(string: imageString)
+      {
         AsyncImage(url: url) { image in
-            image
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: CommonUIConstants.dishPictureSize, maxHeight: CommonUIConstants.dishPictureSize)
+          image
+            .resizable()
+            .scaledToFit()
+            .frame(
+              maxWidth: CommonUIConstants.dishPictureSize,
+              maxHeight: CommonUIConstants.dishPictureSize
+            )
         } placeholder: {
-            ProgressView()
-                .frame(width: CommonUIConstants.dishPictureSize, height: CommonUIConstants.dishPictureSize)
+          ProgressView()
+            .frame(
+              width: CommonUIConstants.dishPictureSize,
+              height: CommonUIConstants.dishPictureSize
+            )
         }
         .padding(CommonUIConstants.mediumPadding)
-      }else{
+      } else {
         Text("Picture not available")
       }
-      
+
       Spacer()
     }
   }

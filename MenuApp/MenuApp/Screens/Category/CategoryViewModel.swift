@@ -38,7 +38,7 @@ extension CategoryView.CategoryViewModel {
     await MainActor.run {
       self.isBusy = true
     }
-    
+
     do {
       let filteredItems = try await itemRepo.list(category: selectedCategory.rawValue)
 
