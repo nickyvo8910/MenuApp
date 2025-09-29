@@ -53,8 +53,31 @@ In Xcode, press `Cmd+U` or go to Product > Test to run the unit tests.
 - Image caching for better performance.  
 - More comprehensive error UI states.  
 - Offline mode with persistent cache.
-- UI refinements and animations.  
+- UI refinements and animations.
+- Invalid JSON reponse handlings ( Beer-Battered Onion Rings)
 
 ## Contact
 
 Created by Nicky Vo.
+
+## Screenshots
+Loading View
+
+![Loading View](./Screenshots/LoadingScreen.png)
+
+Category View - Select A Course
+
+![SelectACourse](./Screenshots/SelectACourse.png)
+
+Menu View - Select A Dish
+
+![SelectADish](./Screenshots/SelectADish.png)
+
+Dish Details View
+
+![DishDetails](./Screenshots/DishDetails.png)
+
+About View
+
+![AboutView](./Screenshots/AboutView.png)
+
