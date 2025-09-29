@@ -24,6 +24,7 @@ struct MenuCourseView: View {
         Spacer()
       }.padding(CommonUIConstants.smallPadding)
       Text("\(viewModel.courseModel.course) Dishes")
+        .textCase(.uppercase)
         .font(.title)
         .bold()
       Text("Select A Dish")

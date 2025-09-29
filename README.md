@@ -54,7 +54,7 @@ In Xcode, press `Cmd+U` or go to Product > Test to run the unit tests.
 - More comprehensive error UI states.  
 - Offline mode with persistent cache.
 - UI refinements and animations.
-- Invalid JSON reponse handlings ( Beer-Battered Onion Rings)
+- Invalid JSON reponse UI handlings (Mushroom & Spinach Pie, Beer-Battered Onion Rings, Chocolate Brownie Sundae)
 
 ## Contact
 
