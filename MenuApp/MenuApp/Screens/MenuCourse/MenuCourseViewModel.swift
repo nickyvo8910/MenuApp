@@ -46,6 +46,9 @@ extension MenuCourseView.MenuCourseViewModel {
       Logger.network.error(
         "\(#function) - Failed to load item details for \(String(describing: selectedItem))"
       )
+      await MainActor.run {
+        self.isBusy = false
+      }
     }
   }
 }
