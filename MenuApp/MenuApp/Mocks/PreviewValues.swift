@@ -7,11 +7,9 @@
 
 
 class PreviewValues {
-  static let items = [createItem(id: 1),
-                      createItem(id: 2),
-                      createItem(id: 3)]
-  
-  static func createItem(id : Int) -> MenuItem{
-    return MenuItem(id: id, category: "cat", name: "name", price: 1.00)
-  }
+  static let items = [
+    MenuItem(id: 1, category: "starter", name: "starter dish", price: 1.00),
+    MenuItem(id: 2, category: "main", name: "main dish", price: 2.00),
+    MenuItem(id: 3, category: "desert", name: "desert dish", price: 3.00)]
 }
+      

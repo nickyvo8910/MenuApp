@@ -7,11 +7,13 @@
 
 import CoreData
 
-struct MenuItem {
+struct MenuItem: Hashable {
   let id: Int
   let category: String
   let name: String
   let price: Double
+  var description: String? = nil
+  var image: String? = nil
 }
 
 extension MenuItem {
@@ -21,25 +23,23 @@ extension MenuItem {
     obj.category = self.category
     obj.name = self.name
     obj.price = self.price
+    
+    // Descriptions and images are not saved locally. Hence, missing from this function
     return obj
   }
   
   init?(managedObject obj: MenuItemMO) throws {
     let id = Int(obj.id)
+    let price = Double(obj.price)
     
     guard let category = obj.category else{
-      throw DomainModelMappingError.invalidMapping("lotNo")
+      throw DomainModelMappingError.invalidMapping("category")
     }
-    guard let name = obj.category else{
+    guard let name = obj.name else{
       throw DomainModelMappingError.invalidMapping("name")
     }
-    guard let priceString = obj.category,
-          let price = Double(priceString),
-          price >= 0
-    else{
-      throw DomainModelMappingError.invalidMapping("price")
-    }
     
-    self.init(id: id, category: category, name: name, price: price)
+    // Descriptions and images are not saved locally
+    self.init(id: id, category: category, name: name, price: price,description: nil, image: nil)
   }
 }

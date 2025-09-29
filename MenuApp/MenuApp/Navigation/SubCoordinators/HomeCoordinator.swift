@@ -20,33 +20,58 @@ class HomeCoordinator: BaseCoordinator<UINavigationController> {
 // MARK: - Showing Screens
 extension HomeCoordinator {
   func showHomeScreen() {
-    let viewModel = HomeView.HomeViewModel()
+    let viewModel = CategoryView.CategoryViewModel()
     viewModel.navDelegate = self
 
-    let view = HomeView(viewModel: viewModel)
+    let view = CategoryView(viewModel: viewModel)
     let controller = HostingController(rootView: view, viewModel: viewModel)
     presenter.setViewControllers([controller], animated: true)
   }
   
-  func showMenuDetails(menuItem: MenuItem) {
-    let viewModel = MenuDetailsView.MenuDetailsViewModel(menuItem: menuItem)
+  func showMenuCourse(courseModel: MenuCourseModel){
+    let viewModel = MenuCourseView.MenuCourseViewModel(courseModel: courseModel)
     viewModel.navDelegate = self
 
-    let view = MenuDetailsView(viewModel: viewModel)
+    let view = MenuCourseView(viewModel: viewModel)
     let controller = HostingController(rootView: view, viewModel: viewModel)
-    controller.title = "MenuDetailsView"
+    controller.title = "MenuCourseView"
+    controller.hidesBottomBarWhenPushed = true
+    presenter.pushViewController(controller, animated: true)
+  }
+  
+  func showMenuDetails(item: MenuItem) {
+    let viewModel = DishDetailsView.DishDetailsViewModel(item: item)
+    viewModel.navDelegate = self
+
+    let view = DishDetailsView(viewModel: viewModel)
+    let controller = HostingController(rootView: view, viewModel: viewModel)
+    controller.title = "DishDetailsView"
     controller.hidesBottomBarWhenPushed = true
     presenter.pushViewController(controller, animated: true)
   }
 }
 
-extension HomeCoordinator: HomeNavDelegate {
-  func onMenuItemTapped(menuItem: MenuItem) {
-    showMenuDetails(menuItem: menuItem)
+extension HomeCoordinator: CategoryViewNavDelegate {
+  func onCategoryTapped(courseModel: MenuCourseModel) {
+    showMenuCourse(courseModel: courseModel)
   }
 }
 
-extension HomeCoordinator: MenuDetailsNavDelegate {
+extension HomeCoordinator: MenuCourseViewNavDelegate {
+  func onCourseViewBack() {
+    presenter.popViewController(animated: true)
+  }
+  
+  func onMenuItemTapped(item: MenuItem) {
+    showMenuDetails(item: item)
+  }
+}
+
+extension HomeCoordinator: DishDetailsNavDelegate {
+  func onDishDetailsBack() {
+    presenter.popViewController(animated: true)
+  }
+  
   func onBack() {
     presenter.popToRootViewController(animated: true)
   }

@@ -13,7 +13,7 @@ protocol MenuItemsRepository{
 
   func find(id: Int) async throws -> MenuItem?
   
-  func list() async throws -> [MenuItem]
+  func list(category: String?) async throws -> [MenuItem]
 
   func count() async throws -> Int
   
@@ -74,12 +74,24 @@ final class CoreDataItemsRepository: MenuItemsRepository{
     }
   }
   
-  func list() async throws -> [MenuItem] {
+  func list(category: String?) async throws -> [MenuItem] {
     return try await self.context.perform {
       let fetch = MenuItemMO.fetchRequest()
+      if let category = category{
+        let predicates: [NSPredicate] = [
+          NSPredicate(format: "category = %@", category as CVarArg)
+        ]
+        fetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+      }
       let items = try self.context.fetch(fetch)
-      // Mapping MO items to DomainObjects and removing nils on errors
-      let domainItems = try items.compactMap({try MenuItem(managedObject: $0) ?? nil})
+      
+      var domainItems: [MenuItem] = []
+      for item in items{
+        if let domainItem = try MenuItem(managedObject: item)
+        {
+          domainItems.append(domainItem)
+        }
+      }
 
       return domainItems
     }
@@ -128,8 +140,12 @@ final class MemoryItemsRepository: MenuItemsRepository {
     return items.first(where: { $0.id == id })
   }
   
-  func list() async throws -> [MenuItem] {
-    return items
+  func list(category: String?) async throws -> [MenuItem] {
+    if category != nil {
+      return items.filter({$0.category == category})
+    } else {
+      return items
+    }
   }
   
   func count() async throws -> Int {

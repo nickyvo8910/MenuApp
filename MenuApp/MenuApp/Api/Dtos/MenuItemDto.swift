@@ -16,6 +16,6 @@ struct MenuItemDto: Decodable {
 
 extension MenuItemDto{
   func toDomainModel() -> MenuItem{
-    return MenuItem(id: id, category: category, name: name, price: price)
+    return MenuItem(id: id, category: category, name: name, price: price,description: description, image: image)
   }
 }
