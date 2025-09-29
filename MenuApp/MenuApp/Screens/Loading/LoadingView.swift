@@ -27,7 +27,7 @@ struct LoadingView: View {
             Button(
               action: {
                 Task {
-                  await viewModel.syncData()
+                  await viewModel.trySyncData()
                 }
               },
               label: {
@@ -53,7 +53,7 @@ struct LoadingView: View {
     }.ignoresSafeArea()
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
       .task {
-        await viewModel.onViewInit()
+        await viewModel.trySyncData()
       }
   }
 }

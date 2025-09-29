@@ -68,7 +68,7 @@ extension LoadingView {
       }
     }
 
-    func onViewInit() async {
+    func trySyncData() async {
       await syncData()
 
       if loadingError != nil {
