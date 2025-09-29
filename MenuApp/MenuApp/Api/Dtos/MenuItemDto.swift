@@ -12,6 +12,24 @@ struct MenuItemDto: Decodable {
   let price: Double
   let description: String?
   let image: String?
+  enum CodingKeys: CodingKey {
+    case id
+    case category
+    case name
+    case price
+    case description
+    case image
+  }
+  
+  init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.id = try container.decode(Int.self, forKey: .id)
+    self.category = try container.decode(String.self, forKey: .category)
+    self.name = try container.decode(String.self, forKey: .name)
+    self.price = try container.decode(Double.self, forKey: .price)
+    self.description = try container.decodeIfPresent(String.self, forKey: .description)
+    self.image = try container.decodeIfPresent(String.self, forKey: .image)
+  }
 }
 
 extension MenuItemDto {

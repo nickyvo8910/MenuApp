@@ -12,6 +12,14 @@ struct MenuCourseView: View {
 
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
+      HStack{
+        Button(action: {
+          viewModel.navDelegate?.onCourseViewBack()
+        }, label: {
+          Text("<- Back to courses")
+        })
+        Spacer()
+      }.padding(CommonUIConstants.smallPadding)
       Text("\(viewModel.courseModel.course) Dishes")
         .font(.title)
         .bold()

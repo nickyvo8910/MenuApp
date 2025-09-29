@@ -17,7 +17,7 @@ struct CategoryView: View {
         .bold()
       categoryCarousel
       Text("Swipe for more ->")
-    }.navigationTitle("Select A Course")
+    }
   }
 
   private var categoryCarousel: some View {

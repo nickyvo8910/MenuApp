@@ -15,7 +15,7 @@ protocol CategoryViewNavDelegate: AnyObject {
 enum Category: String, CaseIterable {
   case starter
   case main
-  case desert
+  case dessert
 }
 
 extension CategoryView {
@@ -38,6 +38,7 @@ extension CategoryView.CategoryViewModel {
     await MainActor.run {
       self.isBusy = true
     }
+    
     do {
       let filteredItems = try await itemRepo.list(category: selectedCategory.rawValue)
 
@@ -45,11 +46,15 @@ extension CategoryView.CategoryViewModel {
         navDelegate?.onCategoryTapped(
           courseModel: MenuCourseModel(course: selectedCategory.rawValue, items: filteredItems)
         )
+        self.isBusy = false
       }
     } catch {
       Logger.database.error(
         "\(#function) - Failed to list items for \(self.selectedCategory.rawValue)"
       )
+      await MainActor.run {
+        self.isBusy = false
+      }
     }
   }
 }

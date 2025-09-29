@@ -16,4 +16,5 @@ class CommonUIConstants {
   static var hstackSpacing: CGFloat = 10
 
   static var entryHeight: CGFloat = 25
+  static var dishPictureSize: CGFloat = 200
 }
