@@ -5,14 +5,14 @@
 //  Created by Nicky Vo on 28/09/2025.
 //
 import Factory
-import UIKit
 import OSLog
+import UIKit
 
 protocol CategoryViewNavDelegate: AnyObject {
   func onCategoryTapped(courseModel: MenuCourseModel)
 }
 
-enum Category: String, CaseIterable{
+enum Category: String, CaseIterable {
   case starter
   case main
   case desert
@@ -22,31 +22,34 @@ extension CategoryView {
   class CategoryViewModel: BaseViewModel, ObservableObject {
     @Injected(\.itemRepo) var itemRepo: MenuItemsRepository
     weak var navDelegate: CategoryViewNavDelegate?
-    
-    var categories : [Category] = Category.allCases
+
+    var categories: [Category] = Category.allCases
     @Published var selectedCategory: Category = Category.starter
-    
+
     @Published var isBusy = false
   }
 }
 
 extension CategoryView.CategoryViewModel {
-  func onCategoryTapped() async{
-    guard !isBusy else{
+  func onCategoryTapped() async {
+    guard !isBusy else {
       return
     }
-    await MainActor.run{
+    await MainActor.run {
       self.isBusy = true
     }
-    do{
+    do {
       let filteredItems = try await itemRepo.list(category: selectedCategory.rawValue)
-      
-      await MainActor.run{
-        navDelegate?.onCategoryTapped(courseModel: MenuCourseModel(course: selectedCategory.rawValue ,items: filteredItems))
+
+      await MainActor.run {
+        navDelegate?.onCategoryTapped(
+          courseModel: MenuCourseModel(course: selectedCategory.rawValue, items: filteredItems)
+        )
       }
-    }
-    catch{
-      Logger.database.error("\(#function) - Failed to list items for \(self.selectedCategory.rawValue)")
+    } catch {
+      Logger.database.error(
+        "\(#function) - Failed to list items for \(self.selectedCategory.rawValue)"
+      )
     }
   }
 }

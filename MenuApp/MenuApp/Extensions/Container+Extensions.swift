@@ -13,11 +13,11 @@ extension Container {
   var apiClient: Factory<ApiClient> {
     self { ApiClient(baseUrl: AppConfigs.menuEndpoint) }.singleton
   }
-  
-  var syncService: Factory<SyncService>{
+
+  var syncService: Factory<SyncService> {
     self { SyncServiceImpl() }.singleton
   }
-  
+
   var itemRepo: Factory<MenuItemsRepository> {
     self { CoreDataItemsRepository(context: CoreDataController.shared.context) }
   }

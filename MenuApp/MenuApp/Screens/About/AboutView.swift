@@ -9,15 +9,14 @@ import SwiftUI
 
 struct AboutView: View {
   @StateObject var viewModel: AboutViewModel
-  
+
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
       Text("About")
-      
+
       Text("Device Model: \(viewModel.deviceModel)")
       Text("OS Version: \(viewModel.osVersion)")
-      
-      
+
       Text("https://github.com/nickyvo8910/MenuApp")
     }
   }
@@ -27,5 +26,3 @@ struct AboutView: View {
   let vm = AboutView.AboutViewModel()
   AboutView(viewModel: vm)
 }
-
-

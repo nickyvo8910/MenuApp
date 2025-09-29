@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
   @StateObject var viewModel: CategoryViewModel
-  
+
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
       Text("Select A Course")
@@ -19,12 +19,12 @@ struct CategoryView: View {
       Text("Swipe for more ->")
     }.navigationTitle("Select A Course")
   }
-  
+
   private var categoryCarousel: some View {
     let view = VStack(spacing: 0) {
       TabView(selection: $viewModel.selectedCategory) {
         ForEach(viewModel.categories, id: \.self) { categoryString in
-          VStack{
+          VStack {
             Text("\(categoryString)")
               .textCase(.uppercase)
               .font(.title)
@@ -32,11 +32,11 @@ struct CategoryView: View {
           }
           .tag(categoryString)
           .padding(CommonUIConstants.mediumPadding)
-            .onTapGesture {
-              Task{
-                await viewModel.onCategoryTapped()
-              }
+          .onTapGesture {
+            Task {
+              await viewModel.onCategoryTapped()
             }
+          }
         }
       }
       .tabViewStyle(.page(indexDisplayMode: .always))
@@ -44,7 +44,6 @@ struct CategoryView: View {
     return view
   }
 }
-
 
 #Preview {
   let items = PreviewValues.items

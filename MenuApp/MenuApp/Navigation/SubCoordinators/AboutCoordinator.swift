@@ -29,6 +29,6 @@ extension AboutCoordinator {
   }
 }
 
-extension AboutCoordinator : AboutNavDelegate{
-  
+extension AboutCoordinator: AboutNavDelegate {
+
 }

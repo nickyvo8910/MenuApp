@@ -10,7 +10,7 @@ import SwiftUI
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
+
   var window: UIWindow?
   var appCoordinator: ApplicationCoordinator!
 
@@ -19,13 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     // Override point for customization after application launch.
-    
+
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
-    
+
     appCoordinator = ApplicationCoordinator(window: window)
     appCoordinator.start()
-    
+
     return true
   }
 

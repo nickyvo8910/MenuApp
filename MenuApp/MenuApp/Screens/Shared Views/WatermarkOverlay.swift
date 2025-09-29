@@ -20,7 +20,7 @@ struct WatermarkOverlay: View {
             .fill(Color.green.opacity(0.5))
             .frame(width: geometry.size.width, height: 40)
             .rotationEffect(.degrees(45))
-          
+
           // The text itself
           Text(watermark.capitalized)
             .font(.system(size: 20, weight: .bold))

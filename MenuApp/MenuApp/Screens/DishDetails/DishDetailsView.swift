@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DishDetailsView: View {
   @StateObject var viewModel: DishDetailsViewModel
-  
+
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
       Text("MenuDetailsView")

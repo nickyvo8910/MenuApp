@@ -13,7 +13,7 @@ protocol AboutNavDelegate: AnyObject {
 extension AboutView {
   class AboutViewModel: BaseViewModel, ObservableObject {
     weak var navDelegate: AboutNavDelegate?
-    
+
     var deviceModel: String = {
       return UIDevice.current.model
     }()

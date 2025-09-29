@@ -5,9 +5,8 @@
 //  Created by Nicky Vo on 28/09/2025.
 //
 
-
-import SwiftUI
 import OSLog
+import SwiftUI
 
 class PopupTracker {
   static let shared = PopupTracker()

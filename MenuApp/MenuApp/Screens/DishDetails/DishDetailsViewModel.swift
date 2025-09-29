@@ -15,7 +15,7 @@ extension DishDetailsView {
   class DishDetailsViewModel: BaseViewModel, ObservableObject {
     weak var navDelegate: DishDetailsNavDelegate?
     var item: MenuItem
-    
+
     init(item: MenuItem) {
       self.item = item
     }

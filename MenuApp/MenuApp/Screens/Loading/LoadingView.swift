@@ -14,26 +14,29 @@ struct LoadingView: View {
       Color.accent
         .ignoresSafeArea()
       VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
-       
+
         // Start of loading form
         VStack(alignment: .center, spacing: CommonUIConstants.mediumPadding) {
           Spacer()
 
-          if viewModel.loadingError != nil{
+          if viewModel.loadingError != nil {
             Text("Please try again")
               .foregroundStyle(Color.colorDarkPink)
               .padding(.bottom, CommonUIConstants.mediumPadding)
-            
-            Button(action:{
-              Task{
-                await viewModel.syncData()
+
+            Button(
+              action: {
+                Task {
+                  await viewModel.syncData()
+                }
+              },
+              label: {
+                Text("Retry")
+                  .foregroundStyle(Color.colorDarkBlue)
+                  .padding(.bottom, CommonUIConstants.mediumPadding)
               }
-            }, label: {
-              Text("Retry")
-                .foregroundStyle(Color.colorDarkBlue)
-                .padding(.bottom, CommonUIConstants.mediumPadding)
-            })
-          }else {
+            )
+          } else {
             LoadingCircle(strokeWidth: 10, height: 100)
 
             Text("Loading")

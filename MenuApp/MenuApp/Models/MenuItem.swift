@@ -23,23 +23,23 @@ extension MenuItem {
     obj.category = self.category
     obj.name = self.name
     obj.price = self.price
-    
+
     // Descriptions and images are not saved locally. Hence, missing from this function
     return obj
   }
-  
+
   init?(managedObject obj: MenuItemMO) throws {
     let id = Int(obj.id)
     let price = Double(obj.price)
-    
-    guard let category = obj.category else{
+
+    guard let category = obj.category else {
       throw DomainModelMappingError.invalidMapping("category")
     }
-    guard let name = obj.name else{
+    guard let name = obj.name else {
       throw DomainModelMappingError.invalidMapping("name")
     }
-    
+
     // Descriptions and images are not saved locally
-    self.init(id: id, category: category, name: name, price: price,description: nil, image: nil)
+    self.init(id: id, category: category, name: name, price: price, description: nil, image: nil)
   }
 }

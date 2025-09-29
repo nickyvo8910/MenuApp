@@ -7,8 +7,8 @@
 //  Ref: https://github.com/Techne-Coding-Classes/iOS-Advanced-SwiftUI-UIKit-Nav.git
 
 import Combine
-import UIKit
 import SwiftUI
+import UIKit
 
 class ApplicationCoordinator: BaseCoordinator<UINavigationController> {
 
@@ -22,7 +22,7 @@ class ApplicationCoordinator: BaseCoordinator<UINavigationController> {
     fatalError("ApplicationCoordinator: This init not used")
   }
 
-  init(window: UIWindow ){
+  init(window: UIWindow) {
     self.window = window
 
     rootViewController = UINavigationController()
@@ -48,7 +48,7 @@ class ApplicationCoordinator: BaseCoordinator<UINavigationController> {
   }
 
   override func start() {
-      startMain()
+    startMain()
   }
 
 }
@@ -75,7 +75,7 @@ extension ApplicationCoordinator {
 // MARK: - MainCoordinatorDelegate
 
 extension ApplicationCoordinator: MainCoordinatorDelegate {
-  
+
   func onMainCoordinationComplete(coordinator: MainCoordinator) {
     free(coordinator: coordinator)
   }

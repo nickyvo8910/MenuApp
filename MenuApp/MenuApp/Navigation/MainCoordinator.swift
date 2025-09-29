@@ -9,81 +9,81 @@
 import UIKit
 
 protocol MainCoordinatorDelegate: AnyObject {
-    func onMainCoordinationComplete(coordinator: MainCoordinator)
+  func onMainCoordinationComplete(coordinator: MainCoordinator)
 }
 
 enum NavigationBarTag: Int {
-    case home
-    case about
+  case home
+  case about
 }
 
 class MainCoordinator: BaseCoordinator<UINavigationController> {
-    
-    weak var delegate: MainCoordinatorDelegate?
-    
-    override func start() {
-      showLoadingPage()
-    }
-    
+
+  weak var delegate: MainCoordinatorDelegate?
+
+  override func start() {
+    showLoadingPage()
+  }
+
 }
 
 // MARK: - Tab Bar Configuration
-private extension MainCoordinator {
-    
-    func configureTabBarCongroller() -> UITabBarController {
-        let homeCoordinator = configureHomeCoordinator()
-        let aboutCoordinator = configureAboutCoordinator()
-        
-        let controllers = [
-            homeCoordinator.presenter,
-            aboutCoordinator.presenter
-        ]
-        
-        let tabBarController = UITabBarController()
-        tabBarController.setViewControllers(controllers, animated: false)
-        
-        return tabBarController
-    }
-    
+extension MainCoordinator {
+
+  fileprivate func configureTabBarCongroller() -> UITabBarController {
+    let homeCoordinator = configureHomeCoordinator()
+    let aboutCoordinator = configureAboutCoordinator()
+
+    let controllers = [
+      homeCoordinator.presenter,
+      aboutCoordinator.presenter,
+    ]
+
+    let tabBarController = UITabBarController()
+    tabBarController.setViewControllers(controllers, animated: false)
+
+    return tabBarController
+  }
+
 }
 
 // MARK: - Sub Coordinators
-private extension MainCoordinator {
-    
-    func configureHomeCoordinator() -> HomeCoordinator {
-        let flowPresenter = UINavigationController()
-        flowPresenter.tabBarItem = UITabBarItem(
-            title: "Home",
-            image: UIImage(systemName: "house"),
-            tag: NavigationBarTag.home.rawValue
-        )
-        
-        let coordinator = HomeCoordinator(presenter: flowPresenter)
-        coordinator.start()
-        
-        store(coordinator: coordinator)
-        return coordinator
-    }
-    
-    func configureAboutCoordinator() -> AboutCoordinator {
-        let flowPresenter = UINavigationController()
-        flowPresenter.tabBarItem = UITabBarItem(
-            title: "About",
-            image: UIImage(systemName: "line.3.horizontal"),
-            tag: NavigationBarTag.about.rawValue
-        )
-        
-        let coordinator = AboutCoordinator(presenter: flowPresenter)
-        coordinator.start()
-        
-        store(coordinator: coordinator)
-        return coordinator
-    }
-    
+extension MainCoordinator {
+
+  fileprivate func configureHomeCoordinator() -> HomeCoordinator {
+    let flowPresenter = UINavigationController()
+    flowPresenter.tabBarItem = UITabBarItem(
+      title: "Home",
+      image: UIImage(systemName: "house"),
+      tag: NavigationBarTag.home.rawValue
+    )
+
+    let coordinator = HomeCoordinator(presenter: flowPresenter)
+    coordinator.start()
+
+    store(coordinator: coordinator)
+    return coordinator
+  }
+
+  fileprivate func configureAboutCoordinator() -> AboutCoordinator {
+    let flowPresenter = UINavigationController()
+    flowPresenter.tabBarItem = UITabBarItem(
+      title: "About",
+      image: UIImage(systemName: "line.3.horizontal"),
+      tag: NavigationBarTag.about.rawValue
+    )
+
+    let coordinator = AboutCoordinator(presenter: flowPresenter)
+    coordinator.start()
+
+    store(coordinator: coordinator)
+    return coordinator
+  }
+
 }
 
-private extension MainCoordinator{
-  func showLoadingPage() {
+extension MainCoordinator {
+  fileprivate func showLoadingPage() {
     let viewModel = LoadingView.LoadingViewModel()
     viewModel.navDelegate = self
     let view = LoadingView(viewModel: viewModel)
@@ -92,8 +92,8 @@ private extension MainCoordinator{
     presenter.setViewControllers([controller], animated: true)
     presenter.navigationBar.isHidden = true
   }
-  
-  func showMain(){
+
+  fileprivate func showMain() {
     presenter.setNavigationBarHidden(true, animated: false)
     let tabBarController = configureTabBarCongroller()
     presenter.setViewControllers([tabBarController], animated: true)

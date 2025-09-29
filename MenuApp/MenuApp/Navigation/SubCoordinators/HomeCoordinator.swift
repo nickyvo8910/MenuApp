@@ -27,8 +27,8 @@ extension HomeCoordinator {
     let controller = HostingController(rootView: view, viewModel: viewModel)
     presenter.setViewControllers([controller], animated: true)
   }
-  
-  func showMenuCourse(courseModel: MenuCourseModel){
+
+  func showMenuCourse(courseModel: MenuCourseModel) {
     let viewModel = MenuCourseView.MenuCourseViewModel(courseModel: courseModel)
     viewModel.navDelegate = self
 
@@ -38,7 +38,7 @@ extension HomeCoordinator {
     controller.hidesBottomBarWhenPushed = true
     presenter.pushViewController(controller, animated: true)
   }
-  
+
   func showMenuDetails(item: MenuItem) {
     let viewModel = DishDetailsView.DishDetailsViewModel(item: item)
     viewModel.navDelegate = self
@@ -61,7 +61,7 @@ extension HomeCoordinator: MenuCourseViewNavDelegate {
   func onCourseViewBack() {
     presenter.popViewController(animated: true)
   }
-  
+
   func onMenuItemTapped(item: MenuItem) {
     showMenuDetails(item: item)
   }
@@ -71,7 +71,7 @@ extension HomeCoordinator: DishDetailsNavDelegate {
   func onDishDetailsBack() {
     presenter.popViewController(animated: true)
   }
-  
+
   func onBack() {
     presenter.popToRootViewController(animated: true)
   }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuCourseView: View {
   @StateObject var viewModel: MenuCourseViewModel
-  
+
   var body: some View {
     VStack(alignment: .center, spacing: CommonUIConstants.vstackSpacing) {
       Text("\(viewModel.courseModel.course) Dishes")
@@ -21,12 +21,12 @@ struct MenuCourseView: View {
       Text("Swipe for more ->")
     }.navigationTitle("Select A Dish")
   }
-  
+
   private var itemCarousel: some View {
     let view = VStack(spacing: 0) {
-      TabView{
+      TabView {
         ForEach(viewModel.courseModel.items, id: \.id) { item in
-          VStack{
+          VStack {
             Text("\(item.name)")
               .textCase(.uppercase)
               .font(.title)
@@ -37,11 +37,11 @@ struct MenuCourseView: View {
           }
           .tag(item)
           .padding(CommonUIConstants.mediumPadding)
-            .onTapGesture {
-              Task{
-                await viewModel.onItemTapped(selectedItem: item)
-              }
+          .onTapGesture {
+            Task {
+              await viewModel.onItemTapped(selectedItem: item)
             }
+          }
         }
       }
       .tabViewStyle(.page(indexDisplayMode: .always))
@@ -50,9 +50,10 @@ struct MenuCourseView: View {
   }
 }
 
-
 #Preview {
   let items = PreviewValues.items
-  let vm = MenuCourseView.MenuCourseViewModel(courseModel: MenuCourseModel(course: "Test", items: items))
+  let vm = MenuCourseView.MenuCourseViewModel(
+    courseModel: MenuCourseModel(course: "Test", items: items)
+  )
   MenuCourseView(viewModel: vm)
 }

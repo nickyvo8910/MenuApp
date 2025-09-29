@@ -14,8 +14,15 @@ struct MenuItemDto: Decodable {
   let image: String?
 }
 
-extension MenuItemDto{
-  func toDomainModel() -> MenuItem{
-    return MenuItem(id: id, category: category, name: name, price: price,description: description, image: image)
+extension MenuItemDto {
+  func toDomainModel() -> MenuItem {
+    return MenuItem(
+      id: id,
+      category: category,
+      name: name,
+      price: price,
+      description: description,
+      image: image
+    )
   }
 }
