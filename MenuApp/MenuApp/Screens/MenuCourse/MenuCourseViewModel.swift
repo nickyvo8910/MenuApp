@@ -41,6 +41,7 @@ extension MenuCourseView.MenuCourseViewModel {
 
       await MainActor.run {
         navDelegate?.onMenuItemTapped(item: fetchedItem)
+        self.isBusy = false
       }
     } catch {
       Logger.network.error(
