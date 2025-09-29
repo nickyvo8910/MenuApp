@@ -44,12 +44,16 @@ extension MenuCourseView.MenuCourseViewModel {
         self.isBusy = false
       }
     } catch {
-      Logger.network.error(
-        "\(#function) - Failed to load item details for \(String(describing: selectedItem))"
-      )
       await MainActor.run {
         self.isBusy = false
       }
+      
+      Logger.network.error(
+        "\(#function) - Failed to load item details for \(String(describing: selectedItem))"
+      )
+      await ConfirmationPopup(title: "Failed to load item", message: "Failed to load item details for \(selectedItem.name). Please try again", confirm: "Ok", onConfirm: {
+      }).present()
+      
     }
   }
 }
